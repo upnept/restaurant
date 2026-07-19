@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS restaurant;
 USE restaurant;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -9,7 +9,7 @@ CREATE TABLE users (
     address VARCHAR(255)
 );
 
-CREATE TABLE menu_items (
+CREATE TABLE IF NOT EXISTS menu_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     description VARCHAR(150) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE menu_items (
     image_url VARCHAR(255)
 );
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     status VARCHAR(30) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE order_items (
+CREATE TABLE IF NOT EXISTS order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     menu_item_id INT NOT NULL,
@@ -36,8 +36,3 @@ CREATE TABLE order_items (
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
 );
-
-INSERT INTO menu_items (name, description, price, category) VALUES
-('CheeseBurger', 'A classic delicious cheeseburger', 4.99, 'Food'),
-('Fries', 'French fries fried in peanut oil.', 1.99, 'Food'),
-('Soda', 'Any sort of beverage available', 2.99, 'Drink')
