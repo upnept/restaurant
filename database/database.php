@@ -4,7 +4,6 @@
     $dsn = 'mysql:host=localhost;dbname=restaurant';
     $username = 'food_mngr';
     $password = 'password';
-    $db;
 
     try {
         $db = new PDO($dsn, $username, $password);
@@ -15,7 +14,7 @@
 
         foreach ($queries as $query) {
             if ($query !== '') {
-                if (!$mysqli->query($query)) {
+                if (!$db->query($query)) {
                     throw new Exception("Error executing query: " . $mysqli->error);
                 }
             }

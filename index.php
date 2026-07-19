@@ -23,7 +23,7 @@ error_reporting(E_ALL);
 require_once('database/database.php');
 
 // init models
-//require_once('models/Students.php');
+require_once('models/MenuItem.php');
 
 $action = filter_input(INPUT_POST, 'action');
 
