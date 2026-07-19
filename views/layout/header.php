@@ -9,13 +9,13 @@
 
 <html>
     <head>
-        <title>Resteraunt</title>
+        <title>Restaurant</title>
         <link rel="stylesheet" type="text/css" href="main.css">
     </head>
 
     <body>
         <header>
-            <h1>Resteraunt</h1>
+            <h1>Restaurant</h1>
         </header>
 
         <header>

@@ -1,8 +1,8 @@
 <?php
     //Establish PDO and database connection
     $db_host = 'localhost';
-    $db_name = 'food_delivery';
-    $dsn = 'mysql:host=localhost;dbname=food_delivery';
+    $db_name = 'restaurant';
+    $dsn = 'mysql:host=localhost;dbname=restaurant';
     $username = 'food_mngr';
     $password = 'password';
     $db;
