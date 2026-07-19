@@ -6,7 +6,7 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
-    address VARCHAR(255),
+    address VARCHAR(255)
 );
 
 CREATE TABLE menu_items (
@@ -15,7 +15,7 @@ CREATE TABLE menu_items (
     description VARCHAR(150) NOT NULL,
     price DECIMAL(6,2) NOT NULL,
     category VARCHAR(50) NOT NULL,
-    image_url VARCHAR(255),
+    image_url VARCHAR(255)
 );
 
 CREATE TABLE orders (
@@ -40,4 +40,4 @@ CREATE TABLE order_items (
 INSERT INTO menu_items (name, description, price, category) VALUES
 ('CheeseBurger', 'A classic delicious cheeseburger', 4.99, 'Food'),
 ('Fries', 'French fries fried in peanut oil.', 1.99, 'Food'),
-('Soda', 'Any sort of beverage available', 2.99, 'Drink'),
+('Soda', 'Any sort of beverage available', 2.99, 'Drink')
