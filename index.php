@@ -28,10 +28,22 @@ require_once('database/database.php');
 $action = filter_input(INPUT_POST, 'action');
 
 switch ($action) {
-    case 'example_action':
+    case 'menu':
         $items = getItems();
 
         include('views/products/index.php');
+
+        break;
+    case 'cart':
+        include('views/cart/index.php');
+
+        break;
+    case 'login':
+        include('views/portal/login.php');
+
+        break;
+    case 'register':
+        include('views/portal/register.php');
 
         break;
     default:
