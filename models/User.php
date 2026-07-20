@@ -27,7 +27,6 @@ function email_exists($email) {
     return $row !== false;
 }
 
-// Returns the full user row (id, name, is_admin, etc.) on success, or false on failure.
 function is_valid_user_login($email, $password) {
     global $db;
     $query = 'SELECT * FROM users WHERE email = :email';
