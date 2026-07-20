@@ -1,7 +1,7 @@
 <?php
     $db_host = 'localhost';
     $db_name = 'restaurant';
-    $dsn = 'mysql:host=localhost;dbname=restaurant';
+    $dsn = 'mysql:host=localhost';
     $username = 'food_mngr';
     $password = 'password';
 
@@ -15,15 +15,14 @@
         foreach ($queries as $query) {
             if ($query !== '') {
                 if (!$db->query($query)) {
-                    throw new Exception("Error executing query: " . $mysqli->error);
+                    $errorInfo = $db->errorInfo();
+                    throw new Exception("Error executing query: " . $errorInfo[2]);
                 }
             }
         }
-
-        echo "Init SQL executed successfully.";
     } catch (PDOException $e) {
-        $error_message =$e->getMessage();
-        include('database_error.php');
+        $error_message = $e->getMessage();
+        include('database/database_error.php');
         exit();
     }
 ?>
