@@ -20,12 +20,10 @@ error_reporting(E_ALL);
 require_once('database/database.php');
 
 // models
-require_once('models/MenuItem.php');
-require_once('models/User.php');
-require_once('models/Order.php');
+require_once('models/item.php');
+require_once('models/user.php');
+require_once('models/order.php');
 require_once('models/cart.php');
-require_once('models/fields.php');
-require_once('models/validate.php');
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action === NULL) {
@@ -75,15 +73,7 @@ switch ($action) {
         $email = '';
         $phone = '';
         $address = '';
-
-        $validate = new Validate();
-        $fields = $validate->getFields();
-        $fields->addField('name');
-        $fields->addField('email');
-        $fields->addField('password');
-        $fields->addField('confirm_password');
-        $fields->addField('phone', 'Use 000-000-0000 format');
-        $fields->addField('address');
+        $errors = [];
 
         include('views/portal/register.php');
         break;
@@ -96,31 +86,36 @@ switch ($action) {
         $phone = trim(filter_input(INPUT_POST, 'phone'));
         $address = trim(filter_input(INPUT_POST, 'address'));
 
-        $validate = new Validate();
-        $fields = $validate->getFields();
-        $fields->addField('name');
-        $fields->addField('email');
-        $fields->addField('password');
-        $fields->addField('confirm_password');
-        $fields->addField('phone', 'Use 000-000-0000 format');
-        $fields->addField('address');
+        $errors = [];
 
-        $validate->text('name', $name);
-        $validate->email('email', $email);
-        $validate->password('password', $password);
-        $validate->text('confirm_password', $confirm_password);
-        $validate->phone('phone', $phone, false);
-        $validate->text('address', $address, false, 1, 255);
-
-        if (!$fields->getField('password')->hasError() && $password !== $confirm_password) {
-            $fields->getField('confirm_password')->setErrorMessage('Passwords do not match.');
+        if ($name === '') {
+            $errors[] = 'Name is required.';
         }
 
-        if (!$fields->getField('email')->hasError() && email_exists($email)) {
-            $fields->getField('email')->setErrorMessage('An account with that email already exists.');
+        $email_pattern = '/^[^@\s]+@[^@\s]+\.[^@\s]+$/';
+        if ($email === '') {
+            $errors[] = 'Email is required.';
+        } elseif (!preg_match($email_pattern, $email)) {
+            $errors[] = 'Please enter a valid email address.';
+        } elseif (email_exists($email)) {
+            $errors[] = 'An account with that email already exists.';
         }
 
-        if ($fields->hasErrors()) {
+        $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
+        if ($password === '') {
+            $errors[] = 'Password is required.';
+        } elseif (!preg_match($password_pattern, $password)) {
+            $errors[] = 'Password must be at least 8 characters and include an uppercase letter, lowercase letter, number, and special character.';
+        } elseif ($password !== $confirm_password) {
+            $errors[] = 'Passwords do not match.';
+        }
+
+        $phone_pattern = '/^\d{3}-\d{3}-\d{4}$/';
+        if ($phone !== '' && !preg_match($phone_pattern, $phone)) {
+            $errors[] = 'Phone must be in 000-000-0000 format.';
+        }
+
+        if (!empty($errors)) {
             include('views/portal/register.php');
         } else {
             $userId = add_user($name, $email, $password, $phone, $address);
@@ -166,8 +161,8 @@ switch ($action) {
         break;
 
     case 'logout':
-        $_SESSION = array(); 
-        session_destroy(); 
+        $_SESSION = array();
+        session_destroy();
         header("Location: .?action=menu");
         exit();
         break;

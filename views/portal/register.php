@@ -1,5 +1,15 @@
 <?php include 'views/layout/header.php'; ?>
 <main>
+    <h1>Register</h1>
+
+    <?php if (!empty($errors)) : ?>
+        <ul class="error">
+            <?php foreach ($errors as $error) : ?>
+                <li><?php echo htmlspecialchars($error); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
     <form action="." method="post">
     <input type="hidden" name="action" value="do_register">
     <fieldset>
@@ -7,31 +17,26 @@
 
         <label>Name:</label>
         <input type="text" name="name"
-               value="<?php echo htmlspecialchars($name); ?>">
-        <?php echo $fields->getField('name')->getHTML(); ?><br>
+               value="<?php echo htmlspecialchars($name); ?>"><br>
 
         <label>Email:</label>
         <input type="text" name="email"
-               value="<?php echo htmlspecialchars($email); ?>">
-        <?php echo $fields->getField('email')->getHTML(); ?><br>
+               value="<?php echo htmlspecialchars($email); ?>"><br>
 
         <label>Password:</label>
-        <input type="password" name="password" value="">
-        <?php echo $fields->getField('password')->getHTML(); ?><br>
+        <input type="password" name="password" value=""><br>
 
         <label>Confirm Password:</label>
-        <input type="password" name="confirm_password" value="">
-        <?php echo $fields->getField('confirm_password')->getHTML(); ?><br>
+        <input type="password" name="confirm_password" value=""><br>
 
         <label>Phone:</label>
         <input type="text" name="phone"
-               value="<?php echo htmlspecialchars($phone); ?>">
-        <?php echo $fields->getField('phone')->getHTML(); ?><br>
+               value="<?php echo htmlspecialchars($phone); ?>"
+               placeholder="000-000-0000"><br>
 
         <label>Address:</label>
         <input type="text" name="address"
-               value="<?php echo htmlspecialchars($address); ?>">
-        <?php echo $fields->getField('address')->getHTML(); ?><br>
+               value="<?php echo htmlspecialchars($address); ?>"><br>
     </fieldset>
     <fieldset>
         <legend>Submit Registration</legend>
