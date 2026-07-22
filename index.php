@@ -148,11 +148,7 @@ switch ($action) {
             $_SESSION['is_admin'] = (bool) $user['is_admin'];
             $_SESSION['user_address'] = $user['address'];
 
-            if ($_SESSION['is_admin']) {
-                header("Location: .?action=admin_menu");
-            } else {
-                header("Location: .?action=menu");
-            }
+            header("Location: .?action=menu");
             exit();
         } else {
             $login_message = 'Invalid email or password.';
